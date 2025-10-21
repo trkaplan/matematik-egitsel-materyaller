@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemşire Nöbet Hesaplama 👩‍⚕️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 10px;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+        text-align: center;
+        color: #667eea;
+        margin-bottom: 5px;
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 12px;
+        font-size: 0.85em;
+    }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .nurse-control {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9em;
+        color: #333;
+    }
+
+    .nurse-control .emoji {
+        font-size: 1.2em;
+    }
+
+    .nurse-control input {
+        width: 50px;
+        padding: 8px 6px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 1.1em;
+        text-align: center;
+        font-weight: bold;
+        background: white;
+    }
+
+    .nurse-control:first-child input {
+        border-color: #f5576c;
+        color: #f5576c;
+    }
+
+    .nurse-control:nth-child(2) input {
+        border-color: #00f2fe;
+        color: #00f2fe;
+    }
+
+    .result-box {
+        text-align: center;
+        margin-bottom: 15px;
+        padding: 0;
+    }
+
+    .result-box h2 {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 4px;
+        font-weight: normal;
+    }
+
+    .result-box .answer {
+        font-size: 2em;
+        font-weight: bold;
+        color: #fa709a;
+        margin-bottom: 15px;
+    }
+
+    .calculate-btn {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 40px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .calculate-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .calculate-btn:active {
+        transform: scale(0.98);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .calendar-container {
+        overflow-x: auto;
+        margin-bottom: 15px;
+        padding: 8px 0;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    .calendar-container::after {
+        content: '';
+        position: sticky;
+        right: 0;
+        top: 0;
+        width: 60px;
+        height: 100%;
+        background: linear-gradient(to left, #f8f9fa 0%, transparent 100%);
+        pointer-events: none;
+        float: right;
+        margin-right: -60px;
+    }
+
+    .calendar-wrapper {
+        padding: 0 8px;
+        min-width: min-content;
+        position: relative;
+    }
+
+    .weekday-header {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 4px;
+        padding-left: 82px;
+    }
+
+    .weekday {
+        min-width: 40px;
+        width: 40px;
+        text-align: center;
+        color: #bbb;
+        font-size: 0.65em;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .calendar-row {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 4px;
+        align-items: center;
+        position: relative;
+    }
+
+    .nurse-label {
+        min-width: 79px;
+        width: 79px;
+        font-weight: bold;
+        font-size: 0.7em;
+        text-align: right;
+        padding-right: 3px;
+        flex-shrink: 0;
+        position: sticky;
+        left: 0;
+        background: #f8f9fa;
+        z-index: 10;
+    }
+
+    .nurse-label.nurse1-label {
+        color: #f5576c;
+    }
+
+    .nurse-label.nurse2-label {
+        color: #00f2fe;
+    }
+
+    .days-container {
+        display: flex;
+        gap: 3px;
+    }
+
+    .day {
+        min-width: 40px;
+        width: 40px;
+        height: 50px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        position: relative;
+        background: white;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .day:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .day-number {
+        font-size: 1em;
+        color: #333;
+        margin-bottom: 1px;
+    }
+
+    .day.nurse1 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-color: #f5576c;
+    }
+
+    .day.nurse2 {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border-color: #00f2fe;
+    }
+
+    .day.both {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+        border-color: #fee140;
+        box-shadow: 0 0 15px rgba(250, 112, 154, 0.6);
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(250, 112, 154, 0.6); }
+        50% { transform: translateY(-6px); box-shadow: 0 6px 20px rgba(250, 112, 154, 0.8); }
+    }
+
+    .explanation {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .explanation h3 {
+        color: #667eea;
+        margin-bottom: 6px;
+        font-size: 1em;
+    }
+
+    .explanation p {
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 6px;
+        font-size: 0.85em;
+    }
+
+    .emoji {
+        font-size: 0.95em;
+    }
+
+    .info-box {
+        background: #e3f2fd;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-size: 0.8em;
+    }
+
+    .info-box strong {
+        color: #1976D2;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <h1>👩‍⚕️ Nöbet Hesaplama 👨‍⚕️</h1>
+        <p class="subtitle">İki hemşire aynı gün nöbet tutuyorlarsa, bir sonraki buluşmaları ne zaman?</p>
+
+```
+    <div class="controls">
+        <div class="nurse-control">
+            <span class="emoji">👩‍⚕️</span>
+            <span><strong>1.</strong> Hemşire</span>
+            <input type="number" id="nurse1" value="6" min="1" max="99">
+            <span>günde bir</span>
+        </div>
+        <div class="nurse-control">
+            <span class="emoji">👨‍⚕️</span>
+            <span><strong>2.</strong> Hemşire</span>
+            <input type="number" id="nurse2" value="9" min="1" max="99">
+            <span>günde bir</span>
+        </div>
+    </div>
+
+    <button class="calculate-btn" id="calculateBtn">Hesapla</button>
+
+    <div id="resultsSection" class="hidden">
+        <div class="result-box">
+            <h2>Cevap:</h2>
+            <div class="answer" id="answer">18 gün sonra</div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-wrapper">
+                <div class="weekday-header" id="weekdayHeader"></div>
+                <div class="calendar-row">
+                    <div class="nurse-label nurse1-label">👩‍⚕️ 1. Hemşire</div>
+                    <div class="days-container" id="calendar1"></div>
+                </div>
+                <div class="calendar-row">
+                    <div class="nurse-label nurse2-label">👨‍⚕️ 2. Hemşire</div>
+                    <div class="days-container" id="calendar2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h3>🤔 Nasıl Hesaplanır?</h3>
+            <p>
+                Bu problem <strong>EKOK (En Küçük Ortak Kat)</strong> ile çözülür! 
+            </p>
+            <p id="explanation-detail"></p>
+            
+            <div class="info-box">
+                <strong>💡 İpucu:</strong> İki sayının EKOK'unu bulmak için, her iki sayının da tam katı olan 
+                en küçük sayıyı arıyoruz. Yukarıdaki takvimde ışıldayan günler, her iki hemşirenin de 
+                nöbetinin çakıştığı günlerdir!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function gcd(a, b) {
+        // EBOB (En Büyük Ortak Bölen) hesaplama
+        while (b !== 0) {
+            let temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    function lcm(a, b) {
+        // EKOK (En Küçük Ortak Kat) hesaplama
+        return (a * b) / gcd(a, b);
+    }
+
+    function updateCalendar() {
+        const nurse1Days = parseInt(document.getElementById('nurse1').value) || 6;
+        const nurse2Days = parseInt(document.getElementById('nurse2').value) || 9;
+        
+        const result = lcm(nurse1Days, nurse2Days);
+        const maxDays = Math.max(result * 2, 60); // En az 2 çakışma göster
+        
+        // Cevabı güncelle
+        document.getElementById('answer').textContent = result + ' gün sonra';
+        
+        // Açıklamayı güncelle
+        const ebob = gcd(nurse1Days, nurse2Days);
+        let explanation = `<strong>${nurse1Days}</strong>'nın katları: `;
+        let multiples1 = [];
+        for (let i = 1; i <= Math.ceil(maxDays / nurse1Days); i++) {
+            multiples1.push(nurse1Days * i);
+        }
+        explanation += multiples1.slice(0, 10).join(', ') + '...<br><br>';
+        
+        explanation += `<strong>${nurse2Days}</strong>'un katları: `;
+        let multiples2 = [];
+        for (let i = 1; i <= Math.ceil(maxDays / nurse2Days); i++) {
+            multiples2.push(nurse2Days * i);
+        }
+        explanation += multiples2.slice(0, 10).join(', ') + '...<br><br>';
+        
+        explanation += `Ortak katlar: <strong style="color: #f5576c;">`;
+        let commonMultiples = [];
+        for (let i = 1; i * result <= maxDays; i++) {
+            commonMultiples.push(i * result);
+        }
+        explanation += commonMultiples.join(', ') + '</strong><br><br>';
+        explanation += `En küçüğü (EKOK): <strong style="color: #fa709a; font-size: 1.2em;">${result} gün</strong>`;
+        
+        document.getElementById('explanation-detail').innerHTML = explanation;
+        
+        // Haftanın günleri başlıkları
+        const weekdays = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+        const weekdayHeader = document.getElementById('weekdayHeader');
+        weekdayHeader.innerHTML = '';
+        
+        for (let day = 0; day <= maxDays; day++) {
+            const weekdayDiv = document.createElement('div');
+            weekdayDiv.className = 'weekday';
+            weekdayDiv.textContent = weekdays[day % 7];
+            weekdayHeader.appendChild(weekdayDiv);
+        }
+        
+        // 1. Hemşire takvimi
+        const calendar1 = document.getElementById('calendar1');
+        calendar1.innerHTML = '';
+        
+        for (let day = 0; day <= maxDays; day++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day';
+            
+            const isNurse1 = day > 0 && day % nurse1Days === 0;
+            
+            if (day === 0) {
+                dayDiv.innerHTML = `
+                    <div class="day-number">0</div>
+                    <div class="emoji">🏥</div>
+                `;
+                dayDiv.classList.add('nurse1');
+                dayDiv.title = 'BAŞLANGIÇ';
+            } else {
+                dayDiv.innerHTML = `<div class="day-number">${day}</div>`;
+                
+                if (isNurse1) {
+                    dayDiv.classList.add('nurse1');
+                    dayDiv.innerHTML += '<div class="emoji">✓</div>';
+                }
+            }
+            
+            calendar1.appendChild(dayDiv);
+        }
+        
+        // 2. Hemşire takvimi
+        const calendar2 = document.getElementById('calendar2');
+        calendar2.innerHTML = '';
+        
+        for (let day = 0; day <= maxDays; day++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day';
+            
+            const isNurse2 = day > 0 && day % nurse2Days === 0;
+            
+            if (day === 0) {
+                dayDiv.innerHTML = `
+                    <div class="day-number">0</div>
+                    <div class="emoji">🏥</div>
+                `;
+                dayDiv.classList.add('nurse2');
+                dayDiv.title = 'BAŞLANGIÇ';
+            } else {
+                dayDiv.innerHTML = `<div class="day-number">${day}</div>`;
+                
+                if (isNurse2) {
+                    dayDiv.classList.add('nurse2');
+                    dayDiv.innerHTML += '<div class="emoji">✓</div>';
+                }
+            }
+            
+            // Çakışma kontrolü - her iki satırda da highlight
+            const isNurse1 = day > 0 && day % nurse1Days === 0;
+            if (isNurse1 && isNurse2) {
+                dayDiv.classList.add('both');
+                dayDiv.innerHTML = `<div class="day-number">${day}</div><div class="emoji">⭐</div>`;
+            }
+            
+            calendar2.appendChild(dayDiv);
+        }
+        
+        // 1. satırdaki çakışan günleri de highlight et
+        const calendar1Days = calendar1.children;
+        for (let day = 0; day <= maxDays; day++) {
+            const isNurse1 = day > 0 && day % nurse1Days === 0;
+            const isNurse2 = day > 0 && day % nurse2Days === 0;
+            
+            if (isNurse1 && isNurse2 && day > 0) {
+                calendar1Days[day].classList.remove('nurse1');
+                calendar1Days[day].classList.add('both');
+                calendar1Days[day].innerHTML = `<div class="day-number">${day}</div><div class="emoji">⭐</div>`;
+            }
+        }
+    }
+
+    // Hesapla butonuna tıklandığında
+    document.getElementById('calculateBtn').addEventListener('click', function() {
+        updateCalendar();
+        document.getElementById('resultsSection').classList.remove('hidden');
+        this.classList.add('hidden');
+    });
+
+    // Input değiştiğinde otomatik hesapla (eğer sonuçlar görünüyorsa)
+    document.getElementById('nurse1').addEventListener('input', function() {
+        if (!document.getElementById('resultsSection').classList.contains('hidden')) {
+            updateCalendar();
+        }
+    });
+    
+    document.getElementById('nurse2').addEventListener('input', function() {
+        if (!document.getElementById('resultsSection').classList.contains('hidden')) {
+            updateCalendar();
+        }
+    });
+</script>
+```
+
+</body>
+</html>
