@@ -1,0 +1,25 @@
+{
+  "name": "matematik-egitsel-materyaller",
+  "version": "1.0.0",
+  "description": "Matematiksel kavramları görselleştiren ve anlaşılır kılan interaktif eğitim araçları",
+  "scripts": {
+    "deploy": "wrangler pages deploy . --project-name=matematik-egitsel-materyaller",
+    "preview": "wrangler pages dev .",
+    "wrangler": "wrangler"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trkaplan/matematik-egitsel-materyaller.git"
+  },
+  "keywords": [
+    "matematik",
+    "education",
+    "interactive",
+    "visualization"
+  ],
+  "author": "Tuncay Kaplan",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}
