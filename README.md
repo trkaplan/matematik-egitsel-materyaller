@@ -2,6 +2,16 @@
 
 Matematiksel kavramları görselleştiren ve anlaşılır kılan interaktif eğitim araçları.
 
+## 🔗 Canlı Demo
+
+> Demo linki yakında eklenecek (GitHub Pages veya benzeri bir platformda yayınlanacak)
+
+## 📸 Önizleme
+
+![Matematik Araçları Önizleme](./screenshots/demo.png)
+
+> Ekran görüntüsü yakında eklenecek
+
 ## 📚 İçindekiler
 
 ### [EKOK - Nöbet Hesaplama](./ekok-nobet-hesaplama)
@@ -22,9 +32,38 @@ Bu repo, soyut matematiksel kavramları somut örnekler ve görsel araçlarla ö
 - Kavramın altında yatan mantığı açıklar
 - Farklı yaş grupları için uygundur
 
-## 🚀 Kullanım
+## 🚀 Hızlı Başlangıç
 
-Her klasör kendi başına çalışan bir HTML uygulaması içerir. Herhangi bir sunucuya ihtiyaç duymadan tarayıcıda açılabilir.
+### Adım 1: Repo'yu Klonlayın
+
+```bash
+git clone https://github.com/trkaplan/matematik-egitsel-materyaller.git
+cd matematik-egitsel-materyaller
+```
+
+### Adım 2: Bir Aracı Açın
+
+Her klasör kendi başına çalışan bir HTML uygulaması içerir. Herhangi bir sunucuya veya bağımlılığa ihtiyaç yoktur.
+
+```bash
+# Örnek: EKOK hesaplama aracını açın
+cd ekok-nobet-hesaplama
+# index.html dosyasını tarayıcınızda açın
+```
+
+### Adım 3: Tarayıcıda Kullanın
+
+`index.html` dosyasını doğrudan tarayıcınızda açabilirsiniz:
+- Dosyaya çift tıklayın, veya
+- Tarayıcınıza sürükleyip bırakın, veya
+- Sağ tıklayıp "Birlikte Aç" seçeneğini kullanın
+
+## 🛠️ Teknolojiler
+
+- **HTML5** - Yapı
+- **CSS3** - Stil ve animasyonlar
+- **Vanilla JavaScript** - İnteraktif özellikler
+- Herhangi bir framework veya bağımlılık gerektirmez!
 
 ## 🤝 Katkıda Bulunma
 
