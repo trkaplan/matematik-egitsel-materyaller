@@ -4,7 +4,9 @@ Matematiksel kavramları görselleştiren ve anlaşılır kılan interaktif eği
 
 ## 🔗 Canlı Demo
 
-> Demo linki yakında eklenecek (GitHub Pages veya benzeri bir platformda yayınlanacak)
+**Production**: [matematik-egitsel-materyaller.pages.dev](https://matematik-egitsel-materyaller.pages.dev)
+
+> Her Pull Request için otomatik staging preview oluşturulur
 
 ## 📸 Önizleme
 
@@ -68,6 +70,26 @@ cd ekok-nobet-hesaplama
 ## 🤝 Katkıda Bulunma
 
 Yeni matematiksel kavramlar için görselleştirme fikirleri veya iyileştirme önerileri her zaman açığız!
+
+### Nasıl Katkıda Bulunulur?
+
+1. Repo'yu fork edin
+2. Yeni bir branch oluşturun (`git checkout -b feature/yeni-ozellik`)
+3. Değişikliklerinizi yapın
+4. Commit edin (`git commit -m 'feat: Yeni özellik eklendi'`)
+5. Branch'inizi push edin (`git push origin feature/yeni-ozellik`)
+6. Pull Request açın
+
+**Not**: Her PR için otomatik olarak staging environment oluşturulur ve PR comment'lerinde preview URL paylaşılır.
+
+## 🚀 Deployment
+
+Bu proje Cloudflare Pages ve GitHub Actions kullanarak otomatik deploy edilmektedir.
+
+- **PR açıldığında**: Otomatik staging preview
+- **Main branch'e merge**: Otomatik production deployment
+
+Detaylı bilgi için [DEPLOYMENT.md](./DEPLOYMENT.md) dosyasına bakın.
 
 ## 📬 İletişim
 

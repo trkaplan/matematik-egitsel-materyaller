@@ -70,10 +70,23 @@ Kod örnekleri ve açıklamalar
 
 ## 🎯 Genel Kod Standartları
 
+### Git Workflow - ZORUNLU:
+- **TÜM değişiklikler Pull Request (PR) ile yapılmalı**
+- Direkt main branch'e commit yapma
+- PR açıldığında otomatik staging preview oluşur
+- Her PR'da preview URL'ini kontrol et
+- PR merge edildikten sonra production'a otomatik deploy olur
+
 ### Git Commit'leri:
 - Açıklayıcı commit mesajları (Türkçe veya İngilizce tutarlı olsun)
 - Küçük, anlamlı commit'ler
 - Emoji kullanımını kullanıcı istemediği sürece kullanma
+- Her commit anlamlı bir değişiklik içermeli
+
+### Branch Stratejisi:
+- Feature: `feature/feature-name` veya `claude/feature-name`
+- Bugfix: `fix/bug-description`
+- Ana branch: `main` (sadece PR merge ile güncellenir)
 
 ### Dosya Organizasyonu:
 - Her proje kendi klasöründe
@@ -87,9 +100,11 @@ Kod örnekleri ve açıklamalar
 
 ### Yeni Özellik Eklerken:
 - Önce mevcut kodu anla
-- Sonra değişiklikleri plan yap
-- Test et
+- Yeni branch oluştur
+- Değişiklikleri yap
+- PR aç ve staging'de test et
 - README'yi güncelle
+- Review sonrası merge
 
 ---
 
